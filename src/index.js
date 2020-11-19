@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 // your code goes here
-const students = require('./InitialData').studentArray;
+const students = require('./InitialData');
 
 app.get('/api/student', (req, res) => {
     res.send(students);
@@ -29,10 +29,11 @@ app.get('/api/student/:id', (req, res) => {
     res.send(student);
 });
 
-app.post('/api/v1/students', (req, res) => {
+app.post('/api/student', (req, res) => {
     const schema = Joi.object({
         name: Joi.string().min(1).required(),
-        subject: Joi.string().min(4).required()        
+        currentClass: Joi.number().required(),
+        division :  Joi.string().min(1).required()    
     })
 
     const validationObject = schema.validate(req.body);
@@ -45,7 +46,8 @@ app.post('/api/v1/students', (req, res) => {
     const student = {
         id : students.length + 1,
         name : req.body.name,
-        subject : req.body.subject
+        currentClass : req.body.currentClass,
+        division : req.body.division
     }
 
     students.push(student);
@@ -54,11 +56,12 @@ app.post('/api/v1/students', (req, res) => {
     res.send(student);
 });
 
-app.put('/api/v1/students/:id', (req, res) => {
+app.put('/api/student/:id', (req, res) => {
     const id = req.params.id;
     const schema = Joi.object({
         name: Joi.string().min(1).required(),
-        subject: Joi.string().min(4).required()        
+        currentClass: Joi.number().required(),
+        division :  Joi.string().min(1).required()    
     })
 
     const validationObject = schema.validate(req.body);
@@ -76,7 +79,8 @@ app.put('/api/v1/students/:id', (req, res) => {
     let student = students.find(student => student.id === parseInt(id));
 
     student.name = req.body.name;
-    student.subject = req.body.subject;
+    student.currentClass = req.body.currentClass;
+    student.division = req.body.division;
 
     console.log(student);
 
@@ -84,7 +88,7 @@ app.put('/api/v1/students/:id', (req, res) => {
     
 });
 
-app.delete('/api/students/:id', (req, res) => {
+app.delete('/api/student/:id', (req, res) => {
     const id = req.params.id;
 
 
@@ -104,7 +108,7 @@ app.delete('/api/students/:id', (req, res) => {
 
     students.splice(studentIndex, 1);
 
-    res.send(students);
+    res.send(student);
     
 });
 
