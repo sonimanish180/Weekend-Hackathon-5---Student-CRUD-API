@@ -1,7 +1,7 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 const bodyParser = require("body-parser");
-const port = 8080
+const port = 8080;
 app.use(express.urlencoded());
 const Joi = require('joi');
 
@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 const students = require('./InitialData');
 
 app.get('/api/student', (req, res) => {
-    res.send(students);
+    res.status(200).send(students);
 });
 
 app.get('/api/student/:id', (req, res) => {
@@ -26,7 +26,7 @@ app.get('/api/student/:id', (req, res) => {
         return;
     }
 
-    res.send(student);
+    res.status(200).send(student);
 });
 
 app.post('/api/student', (req, res) => {
@@ -53,7 +53,7 @@ app.post('/api/student', (req, res) => {
     students.push(student);
 
     console.log(req.body);
-    res.send(student);
+    res.status(200).send(student);
 });
 
 app.put('/api/student/:id', (req, res) => {
@@ -84,7 +84,7 @@ app.put('/api/student/:id', (req, res) => {
 
     console.log(student);
 
-    res.send(student);
+    res.status(200).send(student);
     
 });
 
@@ -108,7 +108,7 @@ app.delete('/api/student/:id', (req, res) => {
 
     students.splice(studentIndex, 1);
 
-    res.send(student);
+    res.status(200).send(student);
     
 });
 
