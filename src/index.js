@@ -33,7 +33,7 @@ app.get('/api/student/:id', (req, res) => {
 
 app.post('/api/student', (req, res) => {
     
-    // res.setHeader('Content-type', 'application/x-www-form-urlencoded');
+    res.setHeader('Content-type', 'application/x-www-form-urlencoded');
 
     const schema = Joi.object({
         name: Joi.string().min(1).required(),
