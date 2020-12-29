@@ -12,6 +12,8 @@ app.use(bodyParser.json())
 // your code goes here//
 const students = require('./InitialData');
 
+const indexId = 7;
+
 app.get('/api/student', (req, res) => {
     res.status(200).send(students);
 });
@@ -32,7 +34,7 @@ app.get('/api/student/:id', (req, res) => {
 app.post('/api/student', (req, res) => {
     
     res.setHeader('Content-type', 'application/x-www-form-urlencoded');
-    
+
     const schema = Joi.object({
         name: Joi.string().min(1).required(),
         currentClass: Joi.number().required(),
@@ -46,8 +48,10 @@ app.post('/api/student', (req, res) => {
         return;
     }
 
+    indexId = indexId+1;
+
     const student = {
-        id : students.length + 1,
+        id : indexId,
         name : req.body.name,
         currentClass : req.body.currentClass,
         division : req.body.division
