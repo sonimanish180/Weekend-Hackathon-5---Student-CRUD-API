@@ -32,9 +32,11 @@ app.get('/api/student/:id', (req, res) => {
 });
 
 app.post('/api/student', (req, res) => {
+
+    indexId = indexId+1;
     
     let student = {
-        id: data[data.length - 1].id + 1,
+        id: indexId,
         ...req.body,
         currentClass: parseInt(req.body.currentClass)
     }
@@ -52,8 +54,6 @@ app.post('/api/student', (req, res) => {
 
 app.put('/api/student/:id', (req, res) => {
     
-    // res.writeHead({'content-type':'application/x-www-form-urlencoded'});
-    res.setHeader('content-type', 'application/x-www-form-urlencoded');
 
     const id = req.params.id;
     const schema = Joi.object({
