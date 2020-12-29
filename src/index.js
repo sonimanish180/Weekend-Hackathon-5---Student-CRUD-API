@@ -67,6 +67,9 @@ app.put('/api/student/:id', (req, res) => {
         return;
     }
 
+    if(!req.body.name && !req.body.currentClass && !req.body.division){
+        res.status(400).send();
+    }
     
     if (req.body.name) {
         if(req.body.name === ""){
