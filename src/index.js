@@ -81,7 +81,7 @@ app.put('/api/student/:id', (req, res) => {
 
     
     if (!student) {
-        res.status(400).send("Student Id is incalid");
+        res.status(400).send("Student Id is invalid");
         return;
     }
 
@@ -100,8 +100,8 @@ app.put('/api/student/:id', (req, res) => {
        
 
     console.log(student);
-
-    res.status(200).send(student);
+    res.writeHead(200, {'content-type':'application/x-www-form-urlencoded'});
+    res.send(student);
     
 });
 
