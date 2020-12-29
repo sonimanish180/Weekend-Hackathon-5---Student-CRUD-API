@@ -58,29 +58,37 @@ app.post('/api/student', (req, res) => {
 
 app.put('/api/student/:id', (req, res) => {
     const id = req.params.id;
-    const schema = Joi.object({
-        name: Joi.string().min(1).required(),
-        currentClass: Joi.number().required(),
-        division :  Joi.string().min(1).required()    
-    })
+    // const schema = Joi.object({
+    //     name: Joi.string().min(1),
+    //     currentClass: Joi.number(),
+    //     division :  Joi.string().min(1)   
+    // })
 
-    const validationObject = schema.validate(req.body);
+    // const validationObject = schema.validate(req.body);
 
     if (!id) {
         res.status(404).send('Student Id is Required.!');
         return;
     }
 
-    if (validationObject.error) {
-        res.status(400).send(validationObject.error.details[0].message);
-        return;
-    }
+    // if (validationObject.error) {
+    //     res.status(400).send(validationObject.error.details[0].message);
+    //     return;
+    // }
 
     let student = students.find(student => student.id === parseInt(id));
+    if (req.body.name) {
+        student.name = req.body.name;
+    }
 
-    student.name = req.body.name;
-    student.currentClass = req.body.currentClass;
-    student.division = req.body.division;
+    if (req.body.currentClass) {
+        student.currentClass = req.body.currentClass;
+    }
+
+    if (req.body.division) {
+        student.division = req.body.division;
+    }
+       
 
     console.log(student);
 
