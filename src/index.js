@@ -33,34 +33,21 @@ app.get('/api/student/:id', (req, res) => {
 
 app.post('/api/student', (req, res) => {
     
-    // res.setHeader('content-type', 'application/x-www-form-urlencoded');
-
-    const schema = Joi.object({
-        name: Joi.string().min(1).required(),
-        currentClass: Joi.number().required(),
-        division :  Joi.string().min(1).required()    
-    })
-
-    const validationObject = schema.validate(req.body);
-
-    if (validationObject.error){
-        res.status(400).send(validationObject.details[0].message);
-        return;
+    let student = {
+        id: data[data.length - 1].id + 1,
+        ...req.body,
+        currentClass: parseInt(req.body.currentClass)
     }
 
-    indexId = indexId+1;
-
-    const student = {
-        id : indexId,
-        name : req.body.name,
-        currentClass : req.body.currentClass,
-        division : req.body.division
+    if(!student.name || !student.currentClass || !student.division){
+        res.status(400).send();
     }
 
     students.push(student);
 
-    console.log(req.body);
-    res.json({"id" : student.id});
+    let id = student.id;
+
+    res.json({"id" : id});
 });
 
 app.put('/api/student/:id', (req, res) => {
