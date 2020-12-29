@@ -53,25 +53,9 @@ app.post('/api/student', (req, res) => {
 });
 
 app.put('/api/student/:id', (req, res) => {
-    
-
-    const id = req.params.id;
-    const schema = Joi.object({
-        name: Joi.string().min(1),
-        currentClass: Joi.number(),
-        division :  Joi.string().min(1)   
-    })
-
-    const validationObject = schema.validate(req.body);
 
     if (!id) {
         res.status(404).send('Student Id is Required.!');
-        return;
-    }
-
-
-    if (validationObject.error) {
-        res.status(400).send(validationObject.error.details[0].message);
         return;
     }
 
@@ -85,20 +69,32 @@ app.put('/api/student/:id', (req, res) => {
 
     
     if (req.body.name) {
+        if(req.body.name === ""){
+            res.status(400).send();
+            return;
+        }
         student.name = req.body.name;
     }
 
     if (req.body.currentClass) {
-        student.currentClass = req.body.currentClass;
+        if(!Number.isInteger(req.body.currentClass)){
+            res.status(400).send();
+            return;
+        }
+        student.currentClass = Number(req.body.currentClass);
     }
 
     if (req.body.division) {
+        if(req.body.division.length !== 1 || !Number.isInteger(req.body.division)) {
+            res.status(400).send();
+            return;
+        }
         student.division = req.body.division;
     }
        
 
     console.log(student);
-    res.status(200).send(student.name);
+    res.send(student.name);
     
 });
 
