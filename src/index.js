@@ -61,34 +61,27 @@ app.put('/api/student/:id', (req, res) => {
 
     let student = students.find(student => student.id === parseInt(id));
 
-    
-    if (!student) {
-        res.status(400).send("Student Id is invalid");
-        return;
-    }
-
     if(!req.body.name && !req.body.currentClass && !req.body.division){
         res.status(400).send();
         return;
     }
     
-    if (req.body.name) {
+    if (!student) {
+        res.status(400).send("Student Id is invalid");
+        return;
+    }else if (req.body.name) {
         if(req.body.name === ""){
             res.status(400).send();
             return;
         }
         student.name = req.body.name;
-    }
-
-    if (req.body.currentClass) {
+    }else if (req.body.currentClass) {
         if(!Number.isInteger(req.body.currentClass)){
             res.status(400).send();
             return;
         }
         student.currentClass = Number(req.body.currentClass);
-    }
-
-    if (req.body.division) {
+    } else if (req.body.division) {
         if(req.body.division.length !== 1 || !Number.isInteger(req.body.division)) {
             res.status(400).send();
             return;
@@ -98,7 +91,7 @@ app.put('/api/student/:id', (req, res) => {
        
 
     console.log(student);
-    res.send(student.name);
+    res.status(200).send(student.name);
     
 });
 
