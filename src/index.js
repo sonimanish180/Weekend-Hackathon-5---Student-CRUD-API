@@ -95,7 +95,7 @@ app.put('/api/student/:id', (req, res) => {
     let currClass = Number(newStd.currentClass);
     newStd.currentClass = currClass;
 
-    data.splice(index, 1, newStd);
+    students.splice(index, 1, newStd);
 
     res.send(stud.name);
     
