@@ -54,53 +54,50 @@ app.post('/api/student', (req, res) => {
 
 app.put('/api/student/:id', (req, res) => {
 
-    const id = req.params.id;
+    let studId = req.params.id;
 
-    if (!id) {
-        res.status(404).send('Student Id is Required.!');
-        return;
+    let stud = students.find(std => std.id === parseInt(studId));
+
+    let index = students.findIndex(std => std.id === parseInt(studId));
+
+    let input = req.body;
+
+    if(!input.name && !input.currentClass && !input.division){
+        res.status(400).send();
     }
 
-    let student = students.find(student => student.id === parseInt(id));
-
-    let index = students.findIndex(std => std.id === parseInt(id));
-
-    if(!req.body.name && !req.body.currentClass && !req.body.division){
+    if(!stud){
         res.status(400).send();
         return;
-    }
-    
-    if (!student) {
-        res.status(400).send("Student Id is invalid");
-        return;
-    }else if (req.body.name) {
-        if(req.body.name === ""){
+    }else if(input.name){
+        if(input.name === ""){
             res.status(400).send();
             return;
         }
-    }else if (req.body.currentClass) {
-        if(!Number.isInteger(req.body.currentClass)){
+    }else if(input.currentClass){
+        if(!Number.isInteger(input.currentClass)){
             res.status(400).send();
             return;
         }
-    } else if (req.body.division) {
-        if(req.body.division.length !== 1 || !Number.isInteger(req.body.division)) {
+    }else if(input.division){
+        if(input.division.length !== 1 || !Number.isInteger(input.division)) {
             res.status(400).send();
             return;
         }
     }
 
-    let tempStudent = {
-        id : id, 
-        ...student,
-        ...req.body,
-        currentClass : Number(req.body.currentClass)
+    let newStd = {
+        id: studId,
+        ...stud,
+        ...input
     }
-       
-    students.splice(index, 1, tempStudent);
 
-    console.log(student);
-    res.status(200).send(student.name);
+    let currClass = Number(newStd.currentClass);
+    newStd.currentClass = currClass;
+
+    data.splice(index, 1, newStd);
+
+    res.send(stud.name);
     
 });
 
