@@ -30,6 +30,9 @@ app.get('/api/student/:id', (req, res) => {
 });
 
 app.post('/api/student', (req, res) => {
+    
+    res.setHeader('Content-type', 'application/x-www-form-urlencoded');
+    
     const schema = Joi.object({
         name: Joi.string().min(1).required(),
         currentClass: Joi.number().required(),
@@ -57,6 +60,10 @@ app.post('/api/student', (req, res) => {
 });
 
 app.put('/api/student/:id', (req, res) => {
+    
+    // res.writeHead({'content-type':'application/x-www-form-urlencoded'});
+    res.setHeader('Content-type', 'application/x-www-form-urlencoded');
+
     const id = req.params.id;
     const schema = Joi.object({
         name: Joi.string().min(1),
@@ -100,8 +107,7 @@ app.put('/api/student/:id', (req, res) => {
        
 
     console.log(student);
-    res.writeHead(200, {'content-type':'application/x-www-form-urlencoded'});
-    res.send(student);
+    res.status(200).send(student);
     
 });
 
