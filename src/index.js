@@ -12,7 +12,7 @@ app.use(bodyParser.json())
 // your code goes here//
 const students = require('./InitialData');
 
-const indexId = 7;
+let indexId = 7;
 
 app.get('/api/student', (req, res) => {
     res.status(200).send(students);
