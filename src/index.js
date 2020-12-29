@@ -54,6 +54,8 @@ app.post('/api/student', (req, res) => {
 
 app.put('/api/student/:id', (req, res) => {
 
+    const id = req.params.id;
+
     if (!id) {
         res.status(404).send('Student Id is Required.!');
         return;
