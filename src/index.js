@@ -71,12 +71,21 @@ app.put('/api/student/:id', (req, res) => {
         return;
     }
 
+
     if (validationObject.error) {
         res.status(400).send(validationObject.error.details[0].message);
         return;
     }
 
     let student = students.find(student => student.id === parseInt(id));
+
+    
+    if (!student) {
+        res.status(400).send("Student Id is incalid");
+        return;
+    }
+
+    
     if (req.body.name) {
         student.name = req.body.name;
     }
