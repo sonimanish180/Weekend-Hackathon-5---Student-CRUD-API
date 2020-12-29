@@ -60,7 +60,7 @@ app.post('/api/student', (req, res) => {
     students.push(student);
 
     console.log(req.body);
-    res.status(200).send(student);
+    res.json({"id" : student.id});
 });
 
 app.put('/api/student/:id', (req, res) => {
@@ -111,7 +111,7 @@ app.put('/api/student/:id', (req, res) => {
        
 
     console.log(student);
-    res.status(200).send(student);
+    res.status(200).send(student.name);
     
 });
 
